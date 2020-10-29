@@ -21,15 +21,7 @@ public class PropertyController {
     @PostMapping("/create")
     @ResponseBody
     public Property createProperty(@RequestBody Property property)throws Exception{
-
-        Property prop = new Property();
-        prop.setTitle(property.getTitle());
-        prop.setCreateDate(LocalDateTime.now());
-        prop.setType(property.getType());
-        prop.setExpiryDate(null);
-        prop.setBedrooms(property.getBedrooms());
-
-        return propertyService.createProperty(prop);
+        return propertyService.createProperty(property);
     }
 
     @DeleteMapping("/delete/{id}")

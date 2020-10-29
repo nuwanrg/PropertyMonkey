@@ -44,7 +44,23 @@ public class CustomPropertyRepositoryImpl implements CustomPropertyRepository {
         }
 
         //locations
+        if (searchObject.getLocations().length > 0 ) {
+            Criteria criteria = new Criteria();
+            criteria = Criteria.where("location").in(Arrays.stream(searchObject.getLocations()).collect(Collectors.toList()));
+            query.addCriteria(criteria);
+        }
 
+        //mix max price
+        if (searchObject.getMinprice() != 0.0 ) {
+            Criteria criteria = new Criteria();
+            criteria = Criteria.where("price").gte(searchObject.getMinprice());
+            query.addCriteria(criteria);
+        }
+        else if (searchObject.getMaxprice() != 0.0 ) {
+            Criteria criteria = new Criteria();
+            criteria = Criteria.where("price").lte(searchObject.getMaxprice());
+            query.addCriteria(criteria);
+        }
 
         properties = mongoTemplate.find(query, Property.class);
 

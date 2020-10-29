@@ -7,4 +7,6 @@ public class SearchObject {
     private String[] types;
     private int[] bedrooms;
     private String[] locations;
+    private double minprice;
+    private double maxprice;
 }
