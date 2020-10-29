@@ -1,0 +1,12 @@
+
+
+Create user and enable authentication
+use admin;
+
+db.createUser(
+  {
+    user: "myUserAdmin",
+    pwd: "monkey123", // or cleartext password
+    roles: [ { role: "userAdminAnyDatabase", db: "admin" }, "readWriteAnyDatabase" ]
+  }
+);
