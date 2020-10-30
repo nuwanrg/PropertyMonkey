@@ -1,4 +1,4 @@
-package com.pm.auth.jwt.repository;
+package com.pm.core.property.repository;
 
 import java.util.Optional;
 
@@ -8,9 +8,9 @@ import com.pm.auth.jwt.model.User;
 
 
 public interface UserRepository extends MongoRepository<User, String> {
-  public User findByUsername(String username);
+    User findByUsername(String username);
 
-  public Boolean existsByUsername(String username);
+    Boolean existsByUsername(String username);
 
-  public Boolean existsByEmail(String email);
+    Boolean existsByEmail(String email);
 }

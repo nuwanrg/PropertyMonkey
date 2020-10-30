@@ -29,14 +29,19 @@ public class CustomPropertyRepositoryImpl implements CustomPropertyRepository {
         Query query= new Query();
         List<Property> properties= new ArrayList<Property>();
 
+        //category
+        Criteria categoryCriteria = new Criteria();
+        categoryCriteria = Criteria.where( "category").is( searchObject.getCategory());
+        query.addCriteria( categoryCriteria );
+
+        //Bedroom criteria
         if ( searchObject.getBedrooms().length > 0) {
             Criteria bedroomCriteria = new Criteria();
             bedroomCriteria = Criteria.where( "bedrooms").in( Arrays.stream(searchObject.getBedrooms()).boxed().toArray(Integer[]::new) );//new  ArrayList(Arrays.asList(searchObject.getBedrooms()))
             query.addCriteria( bedroomCriteria );
-            //query.addCriteria(Criteria.where("bedrooms").is( searchObject.getBedrooms()[i] ));
         }
 
-        //type
+        //prop type criteria
         if (searchObject.getTypes().length > 0 ) {
             Criteria typeCriteria = new Criteria();
             typeCriteria = Criteria.where("type").in(Arrays.stream(searchObject.getTypes()).collect(Collectors.toList()));
@@ -50,17 +55,20 @@ public class CustomPropertyRepositoryImpl implements CustomPropertyRepository {
             query.addCriteria(criteria);
         }
 
-        //mix max price
+        //min price
         if (searchObject.getMinprice() != 0.0 ) {
             Criteria criteria = new Criteria();
             criteria = Criteria.where("price").gte(searchObject.getMinprice());
             query.addCriteria(criteria);
         }
-        else if (searchObject.getMaxprice() != 0.0 ) {
+
+        //max price
+        if (searchObject.getMaxprice() != 0.0 && searchObject.getMaxprice() > searchObject.getMinprice()  ) {
             Criteria criteria = new Criteria();
             criteria = Criteria.where("price").lte(searchObject.getMaxprice());
             query.addCriteria(criteria);
         }
+
 
         properties = mongoTemplate.find(query, Property.class);
 

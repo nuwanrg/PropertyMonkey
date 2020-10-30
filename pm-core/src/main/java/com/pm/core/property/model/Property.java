@@ -1,9 +1,11 @@
 package com.pm.core.property.model;
 
+import com.pm.auth.jwt.model.User;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 
 import java.time.LocalDateTime;
 @NoArgsConstructor
@@ -13,7 +15,7 @@ public class Property {
     @Id
     private String id;
     private String location;
-    private String category;
+    private String category; //buy or rent
     private String title;
     private String address;
     private double price;
@@ -28,6 +30,9 @@ public class Property {
     private LocalDateTime createDate;
     private LocalDateTime expiryDate;
     private String ref_id;
+
+    @DBRef
+    private User user;
 
     public String getTitle() {
         return title;
