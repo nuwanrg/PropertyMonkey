@@ -8,7 +8,7 @@ import com.pm.auth.jwt.model.User;
 
 
 public interface UserRepository extends MongoRepository<User, String> {
-  public User findByUsername(String username);
+  public Optional<User> findByUsername(String username);
 
   public Boolean existsByUsername(String username);
 

@@ -53,7 +53,7 @@ public class AuthController {
     JwtUtils jwtUtils;
 
     @PostMapping("/signin")
-    public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
+    public ResponseEntity<JwtResponse> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
 
         System.out.println(loginRequest.getUsername());
         System.out.println(loginRequest.getPassword());
@@ -114,6 +114,12 @@ public class AuthController {
                         Role modRole = roleRepository.findByName(ERole.ROLE_MODERATOR)
                                 .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
                         roles.add(modRole);
+
+                        break;
+                    case "agent":
+                        Role agentRole = roleRepository.findByName(ERole.ROLE_AGENT)
+                                .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
+                        roles.add(agentRole);
 
                         break;
                     default:
