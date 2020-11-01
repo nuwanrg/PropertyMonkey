@@ -5,12 +5,12 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
+import com.pm.auth.persistent.model.User;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.pm.auth.jwt.model.User;
 
 public class UserDetailsImpl implements UserDetails {
 	private static final long serialVersionUID = 1L;

@@ -1,11 +1,10 @@
-package com.pm.auth.jwt.repository;
+package com.pm.auth.persistent.repository;
 
 import java.util.Optional;
 
+import com.pm.auth.persistent.model.ERole;
+import com.pm.auth.persistent.model.Role;
 import org.springframework.data.mongodb.repository.MongoRepository;
-
-import com.pm.auth.jwt.model.ERole;
-import com.pm.auth.jwt.model.Role;
 
 
 public interface RoleRepository extends MongoRepository<Role, String> {

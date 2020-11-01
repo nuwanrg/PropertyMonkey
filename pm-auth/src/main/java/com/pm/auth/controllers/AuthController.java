@@ -1,4 +1,4 @@
-package com.pm.auth.jwt.controllers;
+package com.pm.auth.controllers;
 
 import java.util.HashSet;
 import java.util.List;
@@ -7,6 +7,9 @@ import java.util.stream.Collectors;
 
 import javax.validation.Valid;
 
+import com.pm.auth.persistent.model.ERole;
+import com.pm.auth.persistent.model.Role;
+import com.pm.auth.persistent.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -14,19 +17,12 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.pm.auth.jwt.services.UserDetailsImpl;
-import com.pm.auth.jwt.repository.UserRepository;
-import com.pm.auth.jwt.repository.RoleRepository;
+import com.pm.auth.persistent.repository.UserRepository;
+import com.pm.auth.persistent.repository.RoleRepository;
 import com.pm.auth.jwt.JwtUtils;
-import com.pm.auth.jwt.model.ERole;
-import com.pm.auth.jwt.model.Role;
-import com.pm.auth.jwt.model.User;
 import com.pm.auth.jwt.payload.request.LoginRequest;
 import com.pm.auth.jwt.payload.request.SignupRequest;
 import com.pm.auth.jwt.payload.response.JwtResponse;

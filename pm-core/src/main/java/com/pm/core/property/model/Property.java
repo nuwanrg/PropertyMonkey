@@ -1,6 +1,7 @@
 package com.pm.core.property.model;
 
-import com.pm.auth.jwt.model.User;
+
+import com.pm.common.persistence.model.User;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

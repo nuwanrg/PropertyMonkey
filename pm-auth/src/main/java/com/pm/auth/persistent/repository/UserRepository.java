@@ -1,10 +1,10 @@
-package com.pm.auth.jwt.repository;
+package com.pm.auth.persistent.repository;
 
 import java.util.Optional;
 
+import com.pm.auth.persistent.model.User;
 import org.springframework.data.mongodb.repository.MongoRepository;
 
-import com.pm.auth.jwt.model.User;
 
 
 public interface UserRepository extends MongoRepository<User, String> {

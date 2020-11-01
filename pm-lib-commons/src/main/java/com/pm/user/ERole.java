@@ -1,4 +1,4 @@
-package com.pm.auth.jwt.model;
+package com.pm.user;
 
 public enum ERole {
 	  ROLE_USER,

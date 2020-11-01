@@ -1,20 +1,20 @@
-package com.pm.auth.jwt.model;
+package com.pm.user;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document(collection = "roles")
-public class Role {
+public class RoleDto {
   @Id
   private String id;
 
   private ERole name;
 
-  public Role() {
+  public RoleDto() {
 
   }
 
-  public Role(ERole name) {
+  public RoleDto(ERole name) {
     this.name = name;
   }
 

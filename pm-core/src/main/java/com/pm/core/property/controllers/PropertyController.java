@@ -1,5 +1,6 @@
 package com.pm.core.property.controllers;
 
+import com.pm.core.property.dto.PropertyDto;
 import com.pm.core.property.model.Property;
 import com.pm.core.property.model.SearchObject;
 import com.pm.core.property.services.PropertyService;
