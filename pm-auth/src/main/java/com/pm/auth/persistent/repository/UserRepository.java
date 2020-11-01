@@ -2,7 +2,7 @@ package com.pm.auth.persistent.repository;
 
 import java.util.Optional;
 
-import com.pm.auth.persistent.model.User;
+import com.pm.common.persistence.model.User;
 import org.springframework.data.mongodb.repository.MongoRepository;
 
 

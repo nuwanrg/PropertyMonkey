@@ -1,6 +1,6 @@
 package com.pm.auth.jwt.services;
 
-import com.pm.auth.persistent.model.User;
+import com.pm.common.persistence.model.User;
 import com.pm.auth.persistent.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
