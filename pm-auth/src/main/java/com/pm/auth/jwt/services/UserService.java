@@ -48,3 +48,14 @@ public class UserService {
         return Boolean.parseBoolean(env.getProperty("geo.ip.lib.enabled"));
     }
 }
+
+/*
+Almost there …
+Please check your email (coolnuwan@gmail.com)
+to confirm your account.
+If coolnuwan@gmail.com is not your email address, please go back and enter the correct one.
+
+If you haven't received our email in 15 minutes, please check your spam folder.
+
+Still can't find it? Try searching Gmail for in:all subject:(Confirm your account on Heroku)
+ */

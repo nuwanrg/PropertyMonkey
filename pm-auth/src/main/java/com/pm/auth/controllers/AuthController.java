@@ -60,9 +60,6 @@ public class AuthController {
 
     @PostMapping("/signin")
     public ResponseEntity<JwtResponse> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
-
-        System.out.println(loginRequest.getUsername());
-        System.out.println(loginRequest.getPassword());
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword()));
         SecurityContextHolder.getContext().setAuthentication(authentication);
@@ -139,17 +136,24 @@ public class AuthController {
         user.setRoles(roles);
         userRepository.save(user);
 
-        userService.addUserLocation(user, getClientIP(request));
+        //TODO FOR FUTURE WORKS-DO NOT REMOVE THIS
+        //userService.addUserLocation(user, getClientIP(request));
 
         return ResponseEntity.ok(new MessageResponse("User registered successfully!"));
     }
 
+    //TODO FOR FUTURE WORKS-DO NOT REMOVE THIS
     private String getClientIP(HttpServletRequest request) {
         final String xfHeader = request.getHeader("X-Forwarded-For");
         if (xfHeader == null) {
             return request.getRemoteAddr();
         }
         return xfHeader.split(",")[0];
+    }
+
+    @GetMapping("/testGetMapping")
+    public void TestGetMapping(){
+        System.out.println("In get mapping");
     }
 
 }
