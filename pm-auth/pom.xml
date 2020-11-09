@@ -17,7 +17,7 @@
 
     <dependencies>
         <dependency>
-            <groupId>com.cc.pm</groupId>
+            <groupId>com.pm.common</groupId>
             <artifactId>pm-lib-commons</artifactId>
             <version>0.1</version>
         </dependency>
@@ -42,6 +42,16 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
+            <exclusions>
+                <exclusion>
+                    <groupId>junit</groupId>
+                    <artifactId>junit</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.junit.vintage</groupId>
+                    <artifactId>junit-vintage-engine</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
 
         <dependency>
@@ -114,5 +124,7 @@
 
     <properties>
         <geoip2.version>2.12.0</geoip2.version>
+        <maven.test.skip>false</maven.test.skip>
     </properties>
+
 </project>

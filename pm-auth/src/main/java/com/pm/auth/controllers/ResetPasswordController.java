@@ -1,6 +1,6 @@
 package com.pm.auth.controllers;
 
-import com.pm.auth.jwt.services.ResetPasswordService;
+import com.pm.auth.services.ResetPasswordService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

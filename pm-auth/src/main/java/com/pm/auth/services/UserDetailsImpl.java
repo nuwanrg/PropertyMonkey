@@ -1,5 +1,6 @@
-package com.pm.auth.jwt.services;
+package com.pm.auth.services;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
@@ -36,9 +37,9 @@ public class UserDetailsImpl implements UserDetails {
 	}
 
 	public static UserDetailsImpl build(User user) {
-		List<GrantedAuthority> authorities = user.getRoles().stream()
-				.map(role -> new SimpleGrantedAuthority(role.getName().name()))
-				.collect(Collectors.toList());
+		List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
+		GrantedAuthority grantedAuthority = new SimpleGrantedAuthority(user.getStrRole());
+		authorities.add(grantedAuthority);
 
 		return new UserDetailsImpl(
 				user.getId(), 

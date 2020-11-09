@@ -14,7 +14,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-import com.pm.auth.jwt.services.UserDetailsServiceImpl;
+import com.pm.auth.services.UserDetailsServiceImpl;
 
 @Configuration
 @EnableWebSecurity
@@ -24,20 +24,18 @@ import com.pm.auth.jwt.services.UserDetailsServiceImpl;
 		prePostEnabled = true)
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
-//	protected void configure(final HttpSecurity http) throws Exception {
-//		System.out.println("Configuring web security..");
-//	}
+
 	@Autowired
 	UserDetailsServiceImpl userDetailsService;
-//
+
 	@Autowired
 	private AuthEntryPointJwt unauthorizedHandler;
-//
+
 	@Bean
 	public AuthTokenFilter authenticationJwtTokenFilter() {
 		return new AuthTokenFilter();
 	}
-//
+
 	@Override
 	public void configure(AuthenticationManagerBuilder authenticationManagerBuilder) throws Exception {
 		authenticationManagerBuilder.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());

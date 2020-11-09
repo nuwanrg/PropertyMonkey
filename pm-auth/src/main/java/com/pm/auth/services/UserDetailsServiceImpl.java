@@ -1,4 +1,4 @@
-package com.pm.auth.jwt.services;
+package com.pm.auth.services;
 
 import com.pm.common.persistence.model.User;
 import org.springframework.beans.factory.annotation.Autowired;

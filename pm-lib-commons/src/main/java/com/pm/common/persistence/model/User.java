@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.annotation.Transient;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -35,7 +36,10 @@ public class User {
     private String password;
 
     @DBRef
-    private Set<Role> roles = new HashSet<>();
+    private Role role;
+
+    @Transient
+    private String strRole;
 
     public User(String username, String email, String password) {
         this.username = username;
