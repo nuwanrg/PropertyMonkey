@@ -2,6 +2,7 @@
 package com.pm;
 
 import com.pm.auth.exception.EmailAlreadyExistException;
+import com.pm.auth.exception.PasswordResetException;
 import com.pm.auth.exception.UserAlreadyExistException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -35,5 +36,11 @@ public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionH
         return handleExceptionInternal( ex, ex.getMessage(), new HttpHeaders(), HttpStatus.CONFLICT, request);
     }
 
+    @ExceptionHandler({ PasswordResetException.class })
+    public ResponseEntity<Object> passwordResetEmailNotFound(final RuntimeException ex, final WebRequest request) {
+        //logger.error("409 Status Code", ex);
+        //final GenericResponse bodyOfResponse = new GenericResponse(messages.getMessage("message.regError", null, request.getLocale()), "UserAlreadyExist");
+        return handleExceptionInternal( ex, ex.getMessage(), new HttpHeaders(), HttpStatus.CONFLICT, request);
+    }
 }
 
