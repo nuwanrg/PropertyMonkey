@@ -3,6 +3,7 @@ package com.pm.auth.controllers;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
+import com.pm.auth.jwt.payload.request.PasswordResetRequest;
 import com.pm.auth.jwt.payload.request.SignupRequest;
 import com.pm.auth.services.ResetPasswordService;
 import com.pm.auth.services.UserSignInService;
@@ -50,8 +51,8 @@ public class AuthController {
 
     // Generate a token and email with password reset link.
     @PostMapping("/resetPassword")
-    public ResponseEntity<String> resetPassword(final HttpServletRequest httpRequest, @RequestParam("email") final String email) {
-        String returnMessage = resetPasswordService.createPasswordResetTokenForUser(httpRequest, email);
+    public ResponseEntity<String> resetPassword(final HttpServletRequest httpRequest, @RequestBody PasswordResetRequest passwordResetRequest) {
+        String returnMessage = resetPasswordService.createPasswordResetTokenForUser(httpRequest, passwordResetRequest.getEmail());
         return new ResponseEntity(returnMessage, HttpStatus.OK);
     }
 
@@ -70,8 +71,8 @@ public class AuthController {
 
     // Save password
     @PostMapping("/savePassword")
-    public ResponseEntity<?> savePassword(@RequestParam String token, @RequestParam String newPassword) {
-        resetPasswordService.savePassword(token, newPassword);
+    public ResponseEntity<?> savePassword(@RequestBody PasswordResetRequest passwordResetRequest) {
+        resetPasswordService.savePassword(passwordResetRequest.getToken(), passwordResetRequest.getPassword());
         return new ResponseEntity("New password saved successfully", HttpStatus.OK);
 
     }

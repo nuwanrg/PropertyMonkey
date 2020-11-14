@@ -1,7 +1,9 @@
 package com.pm.auth.model;
 
 import com.pm.common.persistence.model.User;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -10,6 +12,8 @@ import javax.validation.constraints.NotNull;
 import java.util.Calendar;
 import java.util.Date;
 
+@NoArgsConstructor
+@AllArgsConstructor
 @Data
 @Document(collection = "passwordresettoken")
 public class PasswordResetToken {
