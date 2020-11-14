@@ -4,6 +4,7 @@ import com.maxmind.geoip2.DatabaseReader;
 import com.pm.auth.exception.EmailAlreadyExistException;
 import com.pm.auth.exception.UserAlreadyExistException;
 import com.pm.auth.jwt.JwtUtils;
+import com.pm.auth.jwt.payload.request.SignupRequest;
 import com.pm.auth.jwt.payload.response.MessageResponse;
 import com.pm.auth.persistent.repository.RoleRepository;
 import com.pm.auth.persistent.repository.UserLocationRepository;
@@ -21,6 +22,9 @@ import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import java.net.InetAddress;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 @Service
 @Component
@@ -49,34 +53,67 @@ public class UserSignUpService {
     @Autowired
     private RoleRepository roleRepository;
 
-    public MessageResponse singUp(final User user){
+    @Autowired
+    private MailService mailService;
 
-        if (userRepository.existsByUsername(user.getUsername())) {
-            throw new UserAlreadyExistException("Username "+  user.getUsername() +" is already exists.");
+    public MessageResponse singUp(final SignupRequest signupRequest) {
+
+        if (userRepository.existsByUsername(signupRequest.getUsername())) {
+            throw new UserAlreadyExistException("Username " + signupRequest.getUsername() + " is already exists.");
         }
 
-        if (userRepository.existsByEmail(user.getEmail())) {
-            throw new EmailAlreadyExistException("Email "+  user.getEmail() +" is already exists.");
+        if (userRepository.existsByEmail(signupRequest.getEmail())) {
+            throw new EmailAlreadyExistException("Email " + signupRequest.getEmail() + " is already exists.");
         }
 
         // Create new user's account
-        String password = encoder.encode(user.getPassword());
-        User newUser = new User(user.getUsername(), user.getEmail(), password );
+        String password = encoder.encode(signupRequest.getPassword());
+        User newUser = new User(signupRequest.getUsername(), signupRequest.getEmail(), password);
 
-        String strRole = user.getStrRole();
-        Role role;
-        if (strRole == null )
-        {
-            role = roleRepository.findByStrRole(ERole.ROLE_USER.name());
+        Set<String> strRoles = signupRequest.getRoles();
+        Set<Role> roles = new HashSet<Role>();
 
-        }else {
-            role = roleRepository.findByStrRole(strRole);
-        }
+        strRoles.forEach(e -> {
+                    if (e == null) {
+                        Role role = roleRepository.findByName(ERole.ROLE_USER);
+                        roles.add(role);
+                    } else {
+
+                        switch (e) {
+                            case "ROLE_USER":
+                                Role userRole = roleRepository.findByName(ERole.ROLE_USER);
+                                roles.add(userRole);
+                                break;
+                            case "ROLE_ADMIN":
+                                Role adminRole = roleRepository.findByName(ERole.ROLE_ADMIN);
+                                roles.add(adminRole);
+                                break;
+                            case "ROLE_AGENT":
+                                Role agentRole = roleRepository.findByName(ERole.ROLE_AGENT);
+                                roles.add(agentRole);
+                                break;
+                            case "ROLE_DEVELOPER":
+                                Role developerRole = roleRepository.findByName(ERole.ROLE_DEVELOPER);
+                                roles.add(developerRole);
+                                break;
+                            default:
+                                Role role = roleRepository.findByName(ERole.ROLE_USER);
+                                roles.add(role);
 
 
+                        }
+                    }
+                }
 
-        newUser.setRole(role);
+        );
+
+
+        newUser.setRoles(roles);
         userRepository.save(newUser);
+
+        //Send signup email
+        mailService.sendSignUpMail(newUser.getEmail());
+
 
         //TODO FOR FUTURE WORKS-DO NOT REMOVE THIS
         //userService.addUserLocation(user, getClientIP(request));
@@ -86,7 +123,7 @@ public class UserSignUpService {
 
     public void addUserLocation(User user, String ip) {
 
-        if(!isGeoIpLibEnabled()) {
+        if (!isGeoIpLibEnabled()) {
             return;
         }
 

@@ -36,10 +36,10 @@ public class User {
     private String password;
 
     @DBRef
-    private Role role;
+    private Set<Role> roles;
 
-    @Transient
-    private String strRole;
+    //@Transient
+    //private String strRole;
 
     public User(String username, String email, String password) {
         this.username = username;

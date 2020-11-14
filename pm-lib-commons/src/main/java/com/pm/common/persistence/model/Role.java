@@ -12,10 +12,9 @@ public class Role {
     @Id
     private String id;
 
-    @Transient
     private ERole name;
 
-    private String strRole;
+    //private String strRole;
 
     public Role() {
 
@@ -24,7 +23,7 @@ public class Role {
     public Role(ERole name) {
 
         this.name = name;
-        this.strRole = name.toString();
+        //this.strRole = name.toString();
     }
 
 

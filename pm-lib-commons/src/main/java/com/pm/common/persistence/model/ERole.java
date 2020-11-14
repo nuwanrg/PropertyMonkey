@@ -7,7 +7,7 @@ import static java.util.stream.Stream.*;
 
 public enum ERole {
     ROLE_USER,
-    ROLE_MODERATOR,
+    ROLE_DEVELOPER,
     ROLE_ADMIN,
     ROLE_AGENT;
 

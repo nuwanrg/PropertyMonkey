@@ -8,6 +8,6 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 
 
 public interface RoleRepository extends MongoRepository<Role, String> {
-  public Role findByStrRole(String strRole);
+  public Role findByName(ERole name);
 
 }

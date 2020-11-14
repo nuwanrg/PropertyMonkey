@@ -3,6 +3,7 @@ package com.pm.auth.controllers;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
+import com.pm.auth.jwt.payload.request.SignupRequest;
 import com.pm.auth.services.ResetPasswordService;
 import com.pm.auth.services.UserSignInService;
 import com.pm.auth.services.UserSignUpService;
@@ -34,8 +35,8 @@ public class AuthController {
     }
 
     @PostMapping("/signup")
-    public ResponseEntity<?> registerUser(@Valid @RequestBody User user, final HttpServletRequest request) {
-        return ResponseEntity.ok(userSignUpService.singUp(user));
+    public ResponseEntity<?> registerUser(@Valid @RequestBody SignupRequest signupRequest, final HttpServletRequest request) {
+        return ResponseEntity.ok(userSignUpService.singUp(signupRequest));
     }
 
     //TODO FOR FUTURE WORKS-DO NOT REMOVE THIS
@@ -47,22 +48,43 @@ public class AuthController {
         return xfHeader.split(",")[0];
     }
 
-    @PostMapping("/auth/resetPassword")
-    public ResponseEntity<String> resetPassword(final HttpServletRequest httpRequest , @RequestParam("email") final String email ) {
-
-            String returnMessage = resetPasswordService.createPasswordResetTokenForUser(httpRequest , email);
-            return new ResponseEntity(returnMessage , HttpStatus.OK);
+    // Generate a token and email with password reset link.
+    @PostMapping("/resetPassword")
+    public ResponseEntity<String> resetPassword(final HttpServletRequest httpRequest, @RequestParam("email") final String email) {
+        String returnMessage = resetPasswordService.createPasswordResetTokenForUser(httpRequest, email);
+        return new ResponseEntity(returnMessage, HttpStatus.OK);
     }
 
-    @PostMapping("/auth/changePassword")
-    public ResponseEntity<String> changePassword(final HttpServletRequest httpRequest , @RequestParam("email") final String email ) {
 
-        String returnMessage = resetPasswordService.createPasswordResetTokenForUser(httpRequest , email);
-        return new ResponseEntity(returnMessage , HttpStatus.OK);
+    //Validate password reset token and redirect to password reset page.
+    @GetMapping("/changePassword")
+    public ResponseEntity<String> changePassword(@RequestParam("token") final String token) {
+
+        //check token is valid
+
+        //check token is expired
+
+        // String returnMessage = resetPasswordService.createPasswordResetTokenForUser( email);
+        return new ResponseEntity("Redirect to password change page", HttpStatus.OK);
     }
+
+    // Save password
+    @PostMapping("/savePassword")
+    public ResponseEntity<?> savePassword(@RequestParam String token, @RequestParam String newPassword) {
+        resetPasswordService.savePassword(token, newPassword);
+        return new ResponseEntity("New password saved successfully", HttpStatus.OK);
+
+    }
+
+    @PostMapping("/updatePassword")
+    public ResponseEntity<?> changeUserPassword(@RequestParam String oldPassword, @RequestParam String newPassword, @RequestParam String email) {
+        resetPasswordService.updatePassword(oldPassword, newPassword, email);
+        return new ResponseEntity("Password changed successfully", HttpStatus.OK);
+    }
+
 
     @GetMapping("/testGetMapping")
-    public void TestGetMapping(){
+    public void TestGetMapping() {
         System.out.println("In get mapping");
     }
 
