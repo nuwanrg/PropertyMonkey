@@ -1,5 +1,6 @@
 package com.pm.core.property.repository;
 
+import com.mongodb.client.MongoDatabase;
 import com.pm.core.property.model.Property;
 import com.pm.core.property.model.SearchObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,9 +31,12 @@ public class CustomPropertyRepositoryImpl implements CustomPropertyRepository {
         List<Property> properties= new ArrayList<Property>();
 
         //category
-        Criteria categoryCriteria = new Criteria();
-        categoryCriteria = Criteria.where( "category").is( searchObject.getCategory());
-        query.addCriteria( categoryCriteria );
+
+        if(searchObject.getCategory() != null ) {
+            Criteria categoryCriteria = new Criteria();
+            categoryCriteria = Criteria.where("category").is(searchObject.getCategory());
+            query.addCriteria(categoryCriteria);
+        }
 
         //Bedroom criteria
         if ( searchObject.getBedrooms().length > 0) {
@@ -68,7 +72,9 @@ public class CustomPropertyRepositoryImpl implements CustomPropertyRepository {
             criteria = Criteria.where("price").lte(searchObject.getMaxprice());
             query.addCriteria(criteria);
         }
-
+/*test code
+        MongoDatabase db = mongoTemplate.getDb();
+        db.createCollection("TestTest");*/
 
         properties = mongoTemplate.find(query, Property.class);
 

@@ -12,7 +12,7 @@ public class MongoClientConfig  {
 
     public @Bean
     MongoClient mongoClient() {
-        MongoClient mongoClient = MongoClients.create("mongodb://myUserAdmin:monkey123@54.221.159.129:27017");
+        MongoClient mongoClient = MongoClients.create("mongodb://localhost:27017");
         //mongo.url=mongodb://<user>:<password>@<host>:27017
         return mongoClient;
     }

@@ -73,17 +73,12 @@ public class UserSignUpService {
         Set<String> strRoles = signupRequest.getRoles();
         Set<Role> roles = new HashSet<Role>();
 
-        strRoles.forEach(e -> {
-                    if (e == null) {
-                        Role role = roleRepository.findByName(ERole.ROLE_USER);
-                        roles.add(role);
-                    } else {
-
+        if (strRoles == null) {
+            Role userRole = roleRepository.findByName(ERole.ROLE_USER);
+            roles.add(userRole);
+        } else {
+            strRoles.forEach(e -> {
                         switch (e) {
-                            case "ROLE_USER":
-                                Role userRole = roleRepository.findByName(ERole.ROLE_USER);
-                                roles.add(userRole);
-                                break;
                             case "ROLE_ADMIN":
                                 Role adminRole = roleRepository.findByName(ERole.ROLE_ADMIN);
                                 roles.add(adminRole);
@@ -99,14 +94,10 @@ public class UserSignUpService {
                             default:
                                 Role role = roleRepository.findByName(ERole.ROLE_USER);
                                 roles.add(role);
-
-
                         }
                     }
-                }
-
-        );
-
+            );
+        }
 
         newUser.setRoles(roles);
         userRepository.save(newUser);

@@ -25,13 +25,13 @@ public class UserDetailsServiceImplIntegrationTest {
     @MockBean
     UserRepository userRepository;
 
-    @TestConfiguration
+/*    @TestConfiguration
     static class UserDetailsServiceImplTestContextConfiguration{
         @Bean
         public UserDetailsService userDetailsService(){
             return new UserDetailsServiceImpl();
         }
-    }
+    }*/
 
     @BeforeEach
     public void prepare(){

@@ -5,6 +5,7 @@ import javax.validation.Valid;
 
 import com.pm.auth.jwt.payload.request.PasswordResetRequest;
 import com.pm.auth.jwt.payload.request.SignupRequest;
+import com.pm.auth.jwt.payload.response.MessageResponse;
 import com.pm.auth.services.ResetPasswordService;
 import com.pm.auth.services.UserSignInService;
 import com.pm.auth.services.UserSignUpService;
@@ -15,6 +16,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import com.pm.auth.jwt.payload.request.LoginRequest;
 import com.pm.auth.jwt.payload.response.JwtResponse;
+import org.springframework.web.servlet.view.RedirectView;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
@@ -52,21 +54,22 @@ public class AuthController {
     // Generate a token and email with password reset link.
     @PostMapping("/resetPassword")
     public ResponseEntity<String> resetPassword(final HttpServletRequest httpRequest, @RequestBody PasswordResetRequest passwordResetRequest) {
-        String returnMessage = resetPasswordService.createPasswordResetTokenForUser(httpRequest, passwordResetRequest.getEmail());
+        MessageResponse returnMessage = resetPasswordService.createPasswordResetTokenForUser(httpRequest, passwordResetRequest.getEmail());
         return new ResponseEntity(returnMessage, HttpStatus.OK);
     }
 
 
     //Validate password reset token and redirect to password reset page.
     @GetMapping("/changePassword")
-    public ResponseEntity<String> changePassword(@RequestParam("token") final String token) {
+    public RedirectView changePassword(@RequestParam("token") final String token) {
 
         //check token is valid
 
         //check token is expired
 
         // String returnMessage = resetPasswordService.createPasswordResetTokenForUser( email);
-        return new ResponseEntity("Redirect to password change page", HttpStatus.OK);
+        return new RedirectView("http://localhost:8081/resetPassword");
+        //return new ResponseEntity("Redirect to password change page", HttpStatus.OK);
     }
 
     // Save password

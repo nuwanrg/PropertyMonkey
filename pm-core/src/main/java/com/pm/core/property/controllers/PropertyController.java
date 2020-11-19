@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import java.time.LocalDateTime;
 import java.util.List;
 
+@CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
 @RequestMapping("/property")
 public class PropertyController {
@@ -36,9 +37,14 @@ public class PropertyController {
         return new ResponseEntity<>(propertyService.update(property), HttpStatus.OK);
     }
 
-    @GetMapping("/all")
+/*    @GetMapping("/all")
     public ResponseEntity<List<Property>> findAll() throws Exception{
         return new ResponseEntity<>(propertyService.findAll() , HttpStatus.OK);
+    }*/
+
+    @GetMapping("/all")
+    public List<Property> findAll() throws Exception{
+        return propertyService.findAll();
     }
 
     @GetMapping("/search")

@@ -43,7 +43,8 @@ public class PropertyService implements IPropertyInterface{
     }
 
     public List<Property> findAll() throws Exception {
-        return propertyRepository.findAll();
+        List<Property> properties = propertyRepository.findAll();
+        return properties;
     }
 
     public List<Property> search(SearchObject criteria) throws Exception {

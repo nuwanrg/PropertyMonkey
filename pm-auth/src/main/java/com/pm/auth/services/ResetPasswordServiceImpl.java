@@ -2,6 +2,7 @@ package com.pm.auth.services;
 
 import com.pm.auth.exception.InvalidOldPasswordException;
 import com.pm.auth.exception.PasswordResetException;
+import com.pm.auth.jwt.payload.response.MessageResponse;
 import com.pm.auth.model.PasswordResetToken;
 import com.pm.auth.persistent.repository.PasswordTokenRepository;
 import com.pm.common.persistence.model.User;
@@ -40,7 +41,7 @@ public class ResetPasswordServiceImpl implements  ResetPasswordService{
     UserSecurityService userSecurityService;
 
     @Override
-    public String createPasswordResetTokenForUser(HttpServletRequest request, String email)
+    public MessageResponse createPasswordResetTokenForUser(HttpServletRequest request, String email)
     {
         User user = userRepository.findByEmail(email);
 
@@ -53,7 +54,7 @@ public class ResetPasswordServiceImpl implements  ResetPasswordService{
         createToken(token , user);
 
         mailService.sendPasswordResetMail(getAppUrl(request),token, user.getEmail());
-        return "Password reset link is sent to your email address. Please check your email.";
+        return new MessageResponse( "Password reset link is sent to your email address. Please check your email.");
     }
 
     @Override

@@ -9,4 +9,8 @@ import java.util.List;
 public interface PropertyRepository extends MongoRepository<Property , String> , CustomPropertyRepository {
     @Override
     public List<Property> search(SearchObject searchObject);
+
+    @Override
+    public List<Property> findAll();;
+
 }
