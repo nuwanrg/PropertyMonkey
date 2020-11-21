@@ -13,9 +13,11 @@ import com.pm.common.persistence.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 import com.pm.auth.jwt.payload.request.LoginRequest;
 import com.pm.auth.jwt.payload.response.JwtResponse;
+import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
@@ -61,14 +63,19 @@ public class AuthController {
 
     //Validate password reset token and redirect to password reset page.
     @GetMapping("/changePassword")
-    public RedirectView changePassword(@RequestParam("token") final String token) {
+    public RedirectView changePassword( @RequestParam("token") final String token) {
 
         //check token is valid
 
         //check token is expired
 
+        RedirectView redirectView = new RedirectView("http://localhost:8081/changePassword?token="+token);
+
+        //model.addAttribute("token", token);
+        //return new ModelAndView("redirect:http://localhost:8081/changePassword", model);
+
         // String returnMessage = resetPasswordService.createPasswordResetTokenForUser( email);
-        return new RedirectView("http://localhost:8081/resetPassword");
+        return redirectView;
         //return new ResponseEntity("Redirect to password change page", HttpStatus.OK);
     }
 
@@ -77,7 +84,6 @@ public class AuthController {
     public ResponseEntity<?> savePassword(@RequestBody PasswordResetRequest passwordResetRequest) {
         resetPasswordService.savePassword(passwordResetRequest.getToken(), passwordResetRequest.getPassword());
         return new ResponseEntity("New password saved successfully", HttpStatus.OK);
-
     }
 
     @PostMapping("/updatePassword")
