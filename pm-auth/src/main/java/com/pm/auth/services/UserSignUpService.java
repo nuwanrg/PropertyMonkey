@@ -1,6 +1,6 @@
 package com.pm.auth.services;
 
-import com.maxmind.geoip2.DatabaseReader;
+//import com.maxmind.geoip2.DatabaseReader;
 import com.pm.auth.exception.EmailAlreadyExistException;
 import com.pm.auth.exception.UserAlreadyExistException;
 import com.pm.auth.jwt.JwtUtils;
@@ -32,9 +32,9 @@ public class UserSignUpService {
     @Autowired
     private Environment env;
 
-    @Autowired
+/*    @Autowired
     @Qualifier("GeoIPCountry")
-    private DatabaseReader databaseReader;
+    private DatabaseReader databaseReader;*/
 
     @Autowired
     private UserLocationRepository userLocationRepository;
@@ -112,7 +112,7 @@ public class UserSignUpService {
         return new MessageResponse("User registered successfully!");
     }
 
-    public void addUserLocation(User user, String ip) {
+    /*public void addUserLocation(User user, String ip) {
 
         if (!isGeoIpLibEnabled()) {
             return;
@@ -133,7 +133,7 @@ public class UserSignUpService {
 
     private boolean isGeoIpLibEnabled() {
         return Boolean.parseBoolean(env.getProperty("geo.ip.lib.enabled"));
-    }
+    }*/
 }
 
 /*

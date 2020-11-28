@@ -69,7 +69,7 @@ public class AuthController {
 
         //check token is expired
 
-        RedirectView redirectView = new RedirectView("http://localhost:8081/changePassword?token="+token);
+        RedirectView redirectView = new RedirectView("http://localhost:8081/changePassword/"+token);
 
         //model.addAttribute("token", token);
         //return new ModelAndView("redirect:http://localhost:8081/changePassword", model);

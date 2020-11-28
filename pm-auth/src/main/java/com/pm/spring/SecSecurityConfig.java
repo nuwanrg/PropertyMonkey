@@ -1,3 +1,4 @@
+/*
 package com.pm.spring;
 
 import com.maxmind.geoip2.DatabaseReader;
@@ -17,3 +18,4 @@ public class SecSecurityConfig {
         return new DatabaseReader.Builder(resource).build();
     }
 }
+*/

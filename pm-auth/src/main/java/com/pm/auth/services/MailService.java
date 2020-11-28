@@ -28,7 +28,15 @@ public class MailService {
     public void sendSignUpMail(final String email) {
         final SimpleMailMessage mail = new SimpleMailMessage();
         mail.setSubject("Welcome to PropertyMonkey");
-        mail.setText("message.Signup");
+        mail.setText("message.Signup "+"You have been successfully registered with us.  r\\n\\ For login Click http://localhost:8081/login ." );
+        mail.setTo(email);
+        mailSender.send(mail);
+    }
+
+    public void sendCreateAdminEmail(final String email) {
+        final SimpleMailMessage mail = new SimpleMailMessage();
+        mail.setSubject("PropertyMonkey Admin Account");
+        mail.setText("message.Signup "+"Admin account is successfully created. Please click here to login. http://localhost:8081/login ." );
         mail.setTo(email);
         mailSender.send(mail);
     }
