@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.annotation.Transient;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -39,7 +40,9 @@ public class Property {
     private int completedYear;
     private LocalDateTime createDate;
     private LocalDateTime expiryDate;
-    //private String userId;
+
+    @Transient
+    private String username;
 
     @DBRef
     private User user;

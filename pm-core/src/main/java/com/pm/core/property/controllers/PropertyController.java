@@ -14,25 +14,25 @@ import java.util.List;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
-@RequestMapping("/property")
+@RequestMapping("/api/properties")
 public class PropertyController {
 
     @Autowired
     private PropertyService propertyService;
 
-    @PostMapping("/create")
+    @PostMapping("/")
     @ResponseBody
     public Property createProperty(@RequestBody Property property)throws Exception{
         return propertyService.createProperty(property);
     }
 
-    @DeleteMapping("/delete/{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<HttpStatus> delete(@PathVariable("id") String id ) throws Exception{
         propertyService.delete(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
-    @PutMapping("/update")
+    @PutMapping("/")
     public ResponseEntity<Property> update(@RequestBody Property property) throws Exception{
         return new ResponseEntity<>(propertyService.update(property), HttpStatus.OK);
     }
@@ -42,7 +42,7 @@ public class PropertyController {
         return new ResponseEntity<>(propertyService.findAll() , HttpStatus.OK);
     }*/
 
-    @GetMapping("/all")
+    @GetMapping("/")
     public List<Property> findAll() throws Exception{
         return propertyService.findAll();
     }

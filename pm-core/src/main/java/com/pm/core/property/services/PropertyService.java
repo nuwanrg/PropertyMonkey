@@ -2,6 +2,7 @@ package com.pm.core.property.services;
 
 import com.pm.common.persistence.model.User;
 import com.pm.core.property.dto.PropertyDto;
+import com.pm.core.property.exception.PropertyException;
 import com.pm.core.property.model.Property;
 import com.pm.core.property.model.SearchObject;
 import com.pm.core.property.repository.PropertyRepository;
@@ -26,12 +27,17 @@ public class PropertyService implements IPropertyInterface{
     private UserRepository userRepository;
 
     public Property createProperty (Property property) throws Exception {
-        property.setCreateDate(LocalDateTime.now());
-        property.setExpiryDate(null);
-        User user = userRepository.findByUsername("agent");
-        property.setUser(user);
+        User user = userRepository.findByUsername(property.getUsername());
+        if (user != null ) {
+            property.setCreateDate(LocalDateTime.now());
+            property.setExpiryDate(null);
+            property.setUser(user);
+            return propertyRepository.save(property);
+        } else
+        {
+            throw new PropertyException("Error in creating");
+        }
 
-        return propertyRepository.save(property);
     }
 
     public void delete (String id) throws Exception {
