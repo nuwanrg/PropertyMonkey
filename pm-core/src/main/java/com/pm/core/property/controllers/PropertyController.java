@@ -32,8 +32,8 @@ public class PropertyController {
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
-    @PutMapping("/")
-    public ResponseEntity<Property> update(@RequestBody Property property) throws Exception{
+    @PutMapping("/{id}")
+    public ResponseEntity<Property> update(@RequestBody Property property,@PathVariable("id") String id ) throws Exception{
         return new ResponseEntity<>(propertyService.update(property), HttpStatus.OK);
     }
 
@@ -45,6 +45,11 @@ public class PropertyController {
     @GetMapping("/")
     public List<Property> findAll() throws Exception{
         return propertyService.findAll();
+    }
+
+    @GetMapping("/{id}")
+    public Property getProperty(@PathVariable("id") String id ) throws Exception{
+        return propertyService.getPropertyById(id);
     }
 
     @GetMapping("/search")

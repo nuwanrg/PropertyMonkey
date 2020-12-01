@@ -16,6 +16,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Component("propertyService")
@@ -25,6 +26,15 @@ public class PropertyService implements IPropertyInterface{
 
     @Autowired
     private UserRepository userRepository;
+
+    public Property getPropertyById(String id){
+        Optional<Property> optional= propertyRepository.findById(id);
+        if (optional.isPresent()){
+            return optional.get();
+        }else{
+            return null;
+        }
+    }
 
     public Property createProperty (Property property) throws Exception {
         User user = userRepository.findByUsername(property.getUsername());
