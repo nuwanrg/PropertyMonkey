@@ -4,6 +4,8 @@ package com.pm;
 import com.pm.auth.exception.EmailAlreadyExistException;
 import com.pm.auth.exception.PasswordResetException;
 import com.pm.auth.exception.UserAlreadyExistException;
+import com.pm.auth.jwt.payload.response.MessageResponse;
+import com.pm.common.persistence.model.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpHeaders;
@@ -24,8 +26,9 @@ public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionH
     @ExceptionHandler({ UserAlreadyExistException.class })
     public ResponseEntity<Object> handleUserAlreadyExist(final RuntimeException ex, final WebRequest request) {
         //logger.error("409 Status Code", ex);
-        //final GenericResponse bodyOfResponse = new GenericResponse(messages.getMessage("message.regError", null, request.getLocale()), "UserAlreadyExist");
-        return handleExceptionInternal( ex, ex.getMessage(), new HttpHeaders(), HttpStatus.CONFLICT, request);
+        final MessageResponse messageResponse = new MessageResponse(ex.getMessage());
+        //return ResponseEntity.ok( new User("asdf", "fasdfasdf", "fasdfas"));
+        return handleExceptionInternal( ex, messageResponse, new HttpHeaders(), HttpStatus.CONFLICT, request);
     }
 
     // 409

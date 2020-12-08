@@ -41,6 +41,7 @@ public class AuthController {
 
     @PostMapping("/signup")
     public ResponseEntity<?> registerUser(@Valid @RequestBody SignupRequest signupRequest, final HttpServletRequest request) {
+        //return ResponseEntity.ok( new User("asdf", "fasdfasdf", "fasdfas"));
         return ResponseEntity.ok(userSignUpService.singUp(signupRequest));
     }
 
