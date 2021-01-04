@@ -1,6 +1,7 @@
 package com.pm.auth.services;
 
 //import com.maxmind.geoip2.DatabaseReader;
+
 import com.pm.auth.exception.EmailAlreadyExistException;
 import com.pm.auth.exception.UserAlreadyExistException;
 import com.pm.auth.jwt.JwtUtils;
@@ -11,19 +12,15 @@ import com.pm.auth.persistent.repository.UserLocationRepository;
 import com.pm.auth.persistent.repository.UserRepository;
 import com.pm.common.persistence.model.ERole;
 import com.pm.common.persistence.model.Role;
-import com.pm.common.persistence.model.UserLocation;
 import com.pm.common.persistence.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.core.env.Environment;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
-import java.net.InetAddress;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 @Service
@@ -70,6 +67,7 @@ public class UserSignUpService {
         String password = encoder.encode(signupRequest.getPassword());
         User newUser = new User(signupRequest.getUsername(), signupRequest.getEmail(), password);
 
+
         Set<String> strRoles = signupRequest.getRoles();
         Set<Role> roles = new HashSet<Role>();
 
@@ -100,7 +98,13 @@ public class UserSignUpService {
         }
 
         newUser.setRoles(roles);
+
+        newUser.setUserType(signupRequest.getUserType());//set buyer form User
+
+
         userRepository.save(newUser);
+
+        //newUser.setUserType();
 
         //Send signup email
         mailService.sendSignUpMail(newUser.getEmail());
