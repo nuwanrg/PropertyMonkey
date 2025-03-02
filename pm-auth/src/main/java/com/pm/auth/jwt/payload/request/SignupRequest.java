@@ -1,9 +1,8 @@
 package com.pm.auth.jwt.payload.request;
 
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Size;
 import java.util.Set;
+
+import javax.validation.constraints.*;
  
 public class   SignupRequest {
     @NotBlank
@@ -20,10 +19,7 @@ public class   SignupRequest {
     @NotBlank
     @Size(min = 6, max = 40)
     private String password;
-
-    @NotBlank
-    private String userType;//TODO: will change this to a enum later (buyer and seller)
-
+  
     public String getUsername() {
         return username;
     }
@@ -55,13 +51,4 @@ public class   SignupRequest {
     public void setRole(Set<String> roles) {
       this.roles = roles;
     }
-
-    public String getUserType() {
-        return userType;
-    }
-
-    public void setUserType(String userType) {
-        this.userType = userType;
-    }
 }
-
